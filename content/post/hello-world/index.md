@@ -30,6 +30,4 @@ For easier navigation, use the handy search function that this theme provides, o
 
 Hope you enjoy!
 
-{{< quote author="Sun Tzu" source="The Art of War" url="https://en.wikipedia.org/wiki/The_Art_of_War">}}
-In the midst of chaos, there is also opportunity.
-{{< /quote >}}
+-- Brian

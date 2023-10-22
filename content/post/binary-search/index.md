@@ -14,12 +14,10 @@ weight: 1
 
 ## Problem
 {{< quote >}}
-Return the index of the target value in a sorted array, or -1 if it doesn't exist.
+Given a sorted array `nums` and a target value `T`, return the index of `T` or -1 if it doesn't exist.
 {{< /quote >}}
 
 ## Algorithm
-
-**Input: Sorted array `nums`, target `T`**
 
 1. Initialize a left boundary $L=0$ and a right boundary $R=length($`nums`$)$
 2. Initialize a middle pointer $M = (L + R) / 2$
@@ -30,7 +28,7 @@ Return the index of the target value in a sorted array, or -1 if it doesn't exis
 
 
 
-### Variation 1: Return from inside the loop.
+### Variation 1: Return Early
 ```python
     def search(self, nums: List[int], target: int) -> int: 
         left, right = 0, len(nums)-1
@@ -49,7 +47,7 @@ Return the index of the target value in a sorted array, or -1 if it doesn't exis
 
 ```
 
-### Variation 2: Return after exiting the loop.
+### Variation 2: Return After Exiting
 ```python
     def search(self, nums: List[int], target: int) -> int:
         left, right = 0, len(nums)-1
