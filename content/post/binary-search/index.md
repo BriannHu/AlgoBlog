@@ -31,7 +31,7 @@ Return the index of the target value in a sorted array, or -1 if it doesn't exis
 
 
 ### Variation 1
-
+```python
     def search(self, nums: List[int], target: int) -> int: 
         left, right = 0, len(nums)-1
 
@@ -47,21 +47,23 @@ Return the index of the target value in a sorted array, or -1 if it doesn't exis
 
         return -1
 
+```
+
 ### Variation 2
-
+```python
     def search(self, nums: List[int], target: int) -> int:
-            left, right = 0, len(nums)-1
+        left, right = 0, len(nums)-1
+        
+        while left < right:
+            mid = (left + right) // 2
             
-            while left < right:
-                mid = (left + right) // 2
+            if nums[mid] >= target:
+                right = mid
+            else:
+                left = mid + 1
                 
-                if nums[mid] >= target:
-                    right = mid
-                else:
-                    left = mid + 1
-                    
-            return left if nums[left] == target else -1
-
+        return left if nums[left] == target else -1
+```
 ## Analysis
 
 ### Time Complexity
