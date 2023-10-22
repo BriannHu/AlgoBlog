@@ -30,7 +30,7 @@ Return the index of the target value in a sorted array, or -1 if it doesn't exis
 
 
 
-### Variation 1
+### Variation 1: Return from inside the loop.
 ```python
     def search(self, nums: List[int], target: int) -> int: 
         left, right = 0, len(nums)-1
@@ -49,7 +49,7 @@ Return the index of the target value in a sorted array, or -1 if it doesn't exis
 
 ```
 
-### Variation 2
+### Variation 2: Return after exiting the loop.
 ```python
     def search(self, nums: List[int], target: int) -> int:
         left, right = 0, len(nums)-1
