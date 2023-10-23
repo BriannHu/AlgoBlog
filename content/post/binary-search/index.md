@@ -30,37 +30,37 @@ Given a sorted array `nums` and a target value `T`, return the index of `T` or -
 
 ### Variation 1: Return Early
 ```python
-    def search(self, nums: List[int], target: int) -> int: 
-        left, right = 0, len(nums)-1
+def search(self, nums: List[int], target: int) -> int: 
+    left, right = 0, len(nums)-1
 
-        while left <= right:
-            mid = (left + right) // 2
-            
-            if nums[mid] == target:
-                return mid
-            elif nums[mid] > target:
-                right = mid - 1
-            else:
-                left = mid + 1
+    while left <= right:
+        mid = (left + right) // 2
+        
+        if nums[mid] == target:
+            return mid
+        elif nums[mid] > target:
+            right = mid - 1
+        else:
+            left = mid + 1
 
-        return -1
+    return -1
 
 ```
 
 ### Variation 2: Return After Exiting
 ```python
-    def search(self, nums: List[int], target: int) -> int:
-        left, right = 0, len(nums)-1
+def search(self, nums: List[int], target: int) -> int:
+    left, right = 0, len(nums)-1
+    
+    while left < right:
+        mid = (left + right) // 2
         
-        while left < right:
-            mid = (left + right) // 2
+        if nums[mid] >= target:
+            right = mid
+        else:
+            left = mid + 1
             
-            if nums[mid] >= target:
-                right = mid
-            else:
-                left = mid + 1
-                
-        return left if nums[left] == target else -1
+    return left if nums[left] == target else -1
 ```
 ## Analysis
 
@@ -79,37 +79,37 @@ While the overall algorithm is straightforward, binary search's implementation c
 ### Left/Right Boundaries
 
 When searching for a target in a sorted array, these pointers are almost always initialized as:
-
-    left, right = 0, len(nums)-1
-
+```python
+left, right = 0, len(nums) - 1
+```
 However, both pointers must cover the **entire** search space. If the problem was instead ["Find the insert position"](https://leetcode.com/problems/search-insert-position/), it is possible to insert after the last element. In this case, the boundaries would be initialized as:
-
-    left, right = 0, len(nums)
-
+```python
+left, right = 0, len(nums)
+```
 ### Middle Pointer Calculation
 
 The standard middle pointer calculation is:
-
-    mid = (left + right) // 2
-
+```python
+mid = (left + right) // 2
+```
 However, there are two subtleties to consider: overflow and even middle selection.
 
 **1. Overflow**
 
 Languages with signed integers (ie. Java, C++) have the possibility of overflowing from arithmetic operations. To circumvent this, the following calculation can be used instead:
-
-    mid = left + (right - left) // 2
-
+```python
+mid = left + (right - left) // 2
+```
 **2. Even Middle Selection**
 
 In arrays with an even number of elements, there are two possibitilies for the "middle" element; it can either be the element on the middle left or the middle right.
-
-    mid = left + (right - left) // 2
-           |
-    [1, 2, 3, 4, 5, 6]
-              |
-    mid = left + (right - left + 1) // 2
-
+```python
+mid = left + (right - left) // 2
+       |
+[1, 2, 3, 4, 5, 6]
+          |
+mid = left + (right - left + 1) // 2
+```
 This selection will directly affect how the boundaries should be shrunk, as the wrong choice can lead to an infinite loop.
 
 ### While Loop Condition
@@ -131,32 +131,32 @@ Shrinking the boundary will depend on whether the value at the current index is 
 There are two possibilities to consider when shrinking the boundaries - whether to include the middle pointer or not. **This will depend on both the middle pointer calculation and the conditional check prior to the boundary move**.
 
 Assuming a while condition of `l < r`, the following would **not** work:
+```python
+mid = left + (right - left) // 2        # this line is incorrect
 
-    mid = left + (right - left) // 2        <-- this line is wrong
-
-    if nums[mid] > target:                  <-- given this condition
-        right = mid - 1
-    else:
-        left = mid
-
+if nums[mid] > target:                  # given this condition
+    right = mid - 1
+else:
+    left = mid
+```
 This can be fixed by changing the conditional to include the target value:
+```python
+mid = left + (right - left) // 2
 
-    mid = left + (right - left) // 2
-
-    if nums[mid] >= target:                 <-- changed
-        right = mid - 1
-    else:
-        left = mid
-
+if nums[mid] >= target:                 # correct
+    right = mid - 1
+else:
+    left = mid
+```
 Or by rounding the middle pointer up during its calculation:
+```python
+mid = left + (right - left + 1) // 2    # correct
 
-    mid = left + (right - left + 1) // 2    <-- changed
-
-    if nums[mid] > target:               
-        right = mid - 1
-    else:
-        left = mid
-
+if nums[mid] > target:               
+    right = mid - 1
+else:
+    left = mid
+```
 A trick to easily verify if the middle pointer calculation and boundary shrinking logic are correct is to visualize how it would behave on an array with two elements. If the logic is incorrect, then the boundaries won't move which will result in an infinite loop.
 
 ## Variations
