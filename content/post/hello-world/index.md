@@ -16,16 +16,6 @@ Here, I'll be documenting a list of algorithms and data structures that I find u
 - [Neetcode](https://neetcode.io/)
 - Introduction to Algorithms, by CLRS
 
-A few things to keep in mind regarding the structure of each post.
-
-- **[Overview]** A brief description of the algorithm/data structure.
-- **[Problem]** The input variables and problem statement.
-- **[Algorithm]** Pseudocode of the different steps. Input variables have `A` syntax and declared variables have $A$ syntax.
-- **[Implementation]** Primarily done in Python. Multiple variations provided if applicable.
-- **[Analysis]** Determining the time and space complexities.
-- **[Detailed Explanation]** More in-depth explanations and reasoning behind the logic.
-- **[Variations]** Common variations or follow-ups to the original problem.
-
 For easier navigation, use the handy search function that this theme provides, or filter by catagories/tags.
 
 Hope you enjoy!
