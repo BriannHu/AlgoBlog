@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>optimization on Brian Hu</title><link>https://briannhu.github.io/AlgoBlog/tags/optimization/</link><description>Recent content in optimization on Brian Hu</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sat, 04 Nov 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://briannhu.github.io/AlgoBlog/tags/optimization/index.xml" rel="self" type="application/rss+xml"/><item><title>Morris Traversal</title><link>https://briannhu.github.io/AlgoBlog/p/morris-traversal/</link><pubDate>Sat, 04 Nov 2023 00:00:00 +0000</pubDate><guid>https://briannhu.github.io/AlgoBlog/p/morris-traversal/</guid><description>&lt;h2 id="overview">Overview&lt;/h2>
+&lt;p>Morris Traversal is a tree traversal algorithm that does not use a stack or recursion. In the algorithm, links between different nodes are temporarily created, and are reverted upon traversal to restore the original tree.&lt;/p>
+&lt;h2 id="problem">Problem&lt;/h2>
+&lt;blockquote>
+&lt;p>Given a node &lt;code>root&lt;/code> of a tree, perform an inorder traversal of the tree without using a stack or recursion.&lt;/p>&lt;/blockquote>
+&lt;h2 id="algorithm">Algorithm&lt;/h2>
+&lt;ol>
+&lt;li>Initialize &lt;code>curr&lt;/code> as &lt;code>root&lt;/code>.&lt;/li>
+&lt;li>While &lt;code>curr&lt;/code> is not &lt;code>null&lt;/code>:
+&lt;ul>
+&lt;li>If &lt;code>curr.left&lt;/code> is &lt;code>null&lt;/code>:
+&lt;ul>
+&lt;li>Print &lt;code>curr&lt;/code>&amp;rsquo;s data.&lt;/li>
+&lt;li>Continue right, set &lt;code>curr&lt;/code> as &lt;code>curr.right&lt;/code>.&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>Else:
+&lt;ul>
+&lt;li>In the left subtree, make &lt;code>curr&lt;/code> the right child of the rightmost node.&lt;/li>
+&lt;li>Continue left, set &lt;code>curr&lt;/code> as &lt;code>curr.left&lt;/code>.&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ol>
+&lt;h2 id="implementation">Implementation&lt;/h2>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="k">def&lt;/span> &lt;span class="nf">inorderTraversal&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="bp">self&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">root&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">Optional&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">TreeNode&lt;/span>&lt;span class="p">])&lt;/span> &lt;span class="o">-&amp;gt;&lt;/span> &lt;span class="n">List&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="nb">int&lt;/span>&lt;span class="p">]:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">res&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">[]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">curr&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">root&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">while&lt;/span> &lt;span class="n">curr&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="ow">not&lt;/span> &lt;span class="n">curr&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">left&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">res&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">append&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">curr&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">val&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">curr&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">curr&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">right&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">else&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">prev&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">curr&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">left&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">while&lt;/span> &lt;span class="n">prev&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">right&lt;/span> &lt;span class="ow">and&lt;/span> &lt;span class="n">prev&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">right&lt;/span> &lt;span class="o">!=&lt;/span> &lt;span class="n">curr&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">prev&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">prev&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">right&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="ow">not&lt;/span> &lt;span class="n">prev&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">right&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">prev&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">right&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">curr&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">curr&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">curr&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">left&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">else&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">prev&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">right&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="kc">None&lt;/span> &lt;span class="c1"># recovers the tree (optional)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">res&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">append&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">curr&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">val&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">curr&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">curr&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">right&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="n">res&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="analysis">Analysis&lt;/h2>
+&lt;h3 id="time-complexity">Time Complexity&lt;/h3>
+&lt;p>$O(n)$: It might appear at first that the time complexity is $O(nlogn)$, given that finding the predecessor nodes for each node seems to take $O(logn)$, proportional to the height of the tree. However, finding all the predecessor nodes can be found in $O(n)$ time. Thus, the overall time complexity will be $O(n)$, with one pass to find all the predecessor nodes, and another pass to process all the nodes.&lt;/p>
+&lt;h3 id="space-complexity">Space Complexity&lt;/h3>
+&lt;p>$O(1)$: No extra space is used besides the node pointers which use constant space.&lt;/p>
+&lt;h2 id="explanation">Explanation&lt;/h2>
+&lt;p>The following section explains some of the motivation behind the Morris Traversal algorithm, and is inspired by its &lt;a class="link" href="https://en.wikipedia.org/wiki/Threaded_binary_tree" target="_blank" rel="noopener"
+>Wikipedia page&lt;/a>.&lt;/p>
+&lt;h3 id="motivation">Motivation&lt;/h3>
+&lt;p>In &lt;em>The Art of Computer Programming&lt;/em>, Donald Knuth speculated about the existence of a non-recursive algorithm for in-order traversal, which uses no stack and leaves the tree unmodified. Such an algorithm would prove useful for a hypothetical scenario involving traversing an infinite binary tree, which would be unable to be traversed using the typical recursive or stack-based algorithm.&lt;/p>
+&lt;p>A solution to this is tree threading, which was presented by Joseph M. Morris in 1979.&lt;/p>
+&lt;h3 id="threaded-binary-tree">Threaded Binary Tree&lt;/h3>
+&lt;p>A threaded binary tree is a variation of the classic binary tree which facilitates traversal by incorporating threading links which point from certain nodes to others.&lt;/p>
+&lt;blockquote>
+&lt;p>A binary tree is threaded by making all right child pointers that would normally be null point to the in-order successor of the node (if it exists), and all left child pointers that would normally be null point to the in-order predecessor of the node.&lt;/p>&lt;/blockquote>
+&lt;p>Certain use cases arise from the need of different traversal orders; for example, a tree may have nodes representing people and is sorted by names, but have extra threads which allow for quick traversal in order of birth date, or other characteristics.&lt;/p>
+&lt;h2 id="variations">Variations&lt;/h2>
+&lt;ul>
+&lt;li>&lt;a class="link" href="https://leetcode.com/problems/binary-tree-inorder-traversal/" target="_blank" rel="noopener"
+>Binary Tree Inorder Traversal&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://leetcode.com/problems/binary-tree-preorder-traversal/" target="_blank" rel="noopener"
+>Binary Tree Preorder Traversal&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://leetcode.com/problems/binary-tree-postorder-traversal/" target="_blank" rel="noopener"
+>Binary Tree Postorder Traversal&lt;/a>&lt;/li>
+&lt;/ul></description></item></channel></rss>

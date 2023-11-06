@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Brian Hu</title><link>https://briannhu.github.io/AlgoBlog/</link><description>Recent content on Brian Hu</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sat, 04 Nov 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://briannhu.github.io/AlgoBlog/index.xml" rel="self" type="application/rss+xml"/><item><title>Morris Traversal</title><link>https://briannhu.github.io/AlgoBlog/p/morris-traversal/</link><pubDate>Sat, 04 Nov 2023 00:00:00 +0000</pubDate><guid>https://briannhu.github.io/AlgoBlog/p/morris-traversal/</guid><description>&lt;h2 id="overview">Overview&lt;/h2>
+&lt;p>Morris Traversal is a tree traversal algorithm that does not use a stack or recursion. In the algorithm, links between different nodes are temporarily created, and are reverted upon traversal to restore the original tree.&lt;/p>
+&lt;h2 id="problem">Problem&lt;/h2>
+&lt;blockquote>
+&lt;p>Given a node &lt;code>root&lt;/code> of a tree, perform an inorder traversal of the tree without using a stack or recursion.&lt;/p>&lt;/blockquote>
+&lt;h2 id="algorithm">Algorithm&lt;/h2>
+&lt;ol>
+&lt;li>Initialize &lt;code>curr&lt;/code> as &lt;code>root&lt;/code>.&lt;/li>
+&lt;li>While &lt;code>curr&lt;/code> is not &lt;code>null&lt;/code>:
+&lt;ul>
+&lt;li>If &lt;code>curr.left&lt;/code> is &lt;code>null&lt;/code>:
+&lt;ul>
+&lt;li>Print &lt;code>curr&lt;/code>&amp;rsquo;s data.&lt;/li>
+&lt;li>Continue right, set &lt;code>curr&lt;/code> as &lt;code>curr.right&lt;/code>.&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>Else:
+&lt;ul>
+&lt;li>In the left subtree, make &lt;code>curr&lt;/code> the right child of the rightmost node.&lt;/li>
+&lt;li>Continue left, set &lt;code>curr&lt;/code> as &lt;code>curr.left&lt;/code>.&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ol>
+&lt;h2 id="implementation">Implementation&lt;/h2>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="k">def&lt;/span> &lt;span class="nf">inorderTraversal&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="bp">self&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">root&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">Optional&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">TreeNode&lt;/span>&lt;span class="p">])&lt;/span> &lt;span class="o">-&amp;gt;&lt;/span> &lt;span class="n">List&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="nb">int&lt;/span>&lt;span class="p">]:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">res&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">[]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">curr&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">root&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">while&lt;/span> &lt;span class="n">curr&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="ow">not&lt;/span> &lt;span class="n">curr&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">left&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">res&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">append&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">curr&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">val&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">curr&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">curr&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">right&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">else&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">prev&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">curr&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">left&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">while&lt;/span> &lt;span class="n">prev&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">right&lt;/span> &lt;span class="ow">and&lt;/span> &lt;span class="n">prev&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">right&lt;/span> &lt;span class="o">!=&lt;/span> &lt;span class="n">curr&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">prev&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">prev&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">right&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="ow">not&lt;/span> &lt;span class="n">prev&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">right&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">prev&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">right&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">curr&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">curr&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">curr&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">left&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">else&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">prev&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">right&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="kc">None&lt;/span> &lt;span class="c1"># recovers the tree (optional)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">res&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">append&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">curr&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">val&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">curr&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">curr&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">right&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="n">res&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="analysis">Analysis&lt;/h2>
+&lt;h3 id="time-complexity">Time Complexity&lt;/h3>
+&lt;p>$O(n)$: It might appear at first that the time complexity is $O(nlogn)$, given that finding the predecessor nodes for each node seems to take $O(logn)$, proportional to the height of the tree. However, finding all the predecessor nodes can be found in $O(n)$ time. Thus, the overall time complexity will be $O(n)$, with one pass to find all the predecessor nodes, and another pass to process all the nodes.&lt;/p>
+&lt;h3 id="space-complexity">Space Complexity&lt;/h3>
+&lt;p>$O(1)$: No extra space is used besides the node pointers which use constant space.&lt;/p>
+&lt;h2 id="explanation">Explanation&lt;/h2>
+&lt;p>The following section explains some of the motivation behind the Morris Traversal algorithm, and is inspired by its &lt;a class="link" href="https://en.wikipedia.org/wiki/Threaded_binary_tree" target="_blank" rel="noopener"
+>Wikipedia page&lt;/a>.&lt;/p>
+&lt;h3 id="motivation">Motivation&lt;/h3>
+&lt;p>In &lt;em>The Art of Computer Programming&lt;/em>, Donald Knuth speculated about the existence of a non-recursive algorithm for in-order traversal, which uses no stack and leaves the tree unmodified. Such an algorithm would prove useful for a hypothetical scenario involving traversing an infinite binary tree, which would be unable to be traversed using the typical recursive or stack-based algorithm.&lt;/p>
+&lt;p>A solution to this is tree threading, which was presented by Joseph M. Morris in 1979.&lt;/p>
+&lt;h3 id="threaded-binary-tree">Threaded Binary Tree&lt;/h3>
+&lt;p>A threaded binary tree is a variation of the classic binary tree which facilitates traversal by incorporating threading links which point from certain nodes to others.&lt;/p>
+&lt;blockquote>
+&lt;p>A binary tree is threaded by making all right child pointers that would normally be null point to the in-order successor of the node (if it exists), and all left child pointers that would normally be null point to the in-order predecessor of the node.&lt;/p>&lt;/blockquote>
+&lt;p>Certain use cases arise from the need of different traversal orders; for example, a tree may have nodes representing people and is sorted by names, but have extra threads which allow for quick traversal in order of birth date, or other characteristics.&lt;/p>
+&lt;h2 id="variations">Variations&lt;/h2>
+&lt;ul>
+&lt;li>&lt;a class="link" href="https://leetcode.com/problems/binary-tree-inorder-traversal/" target="_blank" rel="noopener"
+>Binary Tree Inorder Traversal&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://leetcode.com/problems/binary-tree-preorder-traversal/" target="_blank" rel="noopener"
+>Binary Tree Preorder Traversal&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://leetcode.com/problems/binary-tree-postorder-traversal/" target="_blank" rel="noopener"
+>Binary Tree Postorder Traversal&lt;/a>&lt;/li>
+&lt;/ul></description></item><item><title>Binary Search</title><link>https://briannhu.github.io/AlgoBlog/p/binary-search/</link><pubDate>Sun, 22 Oct 2023 00:00:00 +0000</pubDate><guid>https://briannhu.github.io/AlgoBlog/p/binary-search/</guid><description>&lt;h2 id="overview">Overview&lt;/h2>
+&lt;p>Binary search is a search algorithm that returns the index of a target value within a sorted array. Instead of iterating through each element of the array, it utilizes the sorted nature of the array to search more efficiently and improve the time complexity from $O(n)$ to $O(logn)$.&lt;/p>
+&lt;h2 id="problem">Problem&lt;/h2>
+&lt;blockquote>
+&lt;p>Given a sorted array &lt;code>nums&lt;/code> and a target value &lt;code>T&lt;/code>, return the index of &lt;code>T&lt;/code> or -1 if it doesn&amp;rsquo;t exist.&lt;/p>&lt;/blockquote>
+&lt;h2 id="algorithm">Algorithm&lt;/h2>
+&lt;ol>
+&lt;li>Initialize a left boundary $L=0$ and a right boundary $R=length($&lt;code>nums&lt;/code>$)$&lt;/li>
+&lt;li>Initialize a middle pointer $M = (L + R) / 2$&lt;/li>
+&lt;li>If the value at index $M$ is ever equal to &lt;code>T&lt;/code>, return $M$; otherwise shrink $L$ or $R$ accordingly&lt;/li>
+&lt;li>If no value is equal to &lt;code>T&lt;/code>, return $-1$&lt;/li>
+&lt;/ol>
+&lt;h2 id="implementation">Implementation&lt;/h2>
+&lt;h3 id="variation-1-return-early">Variation 1: Return Early&lt;/h3>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="k">def&lt;/span> &lt;span class="nf">search&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="bp">self&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">nums&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">List&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="nb">int&lt;/span>&lt;span class="p">],&lt;/span> &lt;span class="n">target&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nb">int&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">-&amp;gt;&lt;/span> &lt;span class="nb">int&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">left&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">right&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nb">len&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">nums&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="mi">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">while&lt;/span> &lt;span class="n">left&lt;/span> &lt;span class="o">&amp;lt;=&lt;/span> &lt;span class="n">right&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">mid&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">left&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="n">right&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">//&lt;/span> &lt;span class="mi">2&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="n">nums&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">mid&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="n">target&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="n">mid&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">elif&lt;/span> &lt;span class="n">nums&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">mid&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">&amp;gt;&lt;/span> &lt;span class="n">target&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">right&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">mid&lt;/span> &lt;span class="o">-&lt;/span> &lt;span class="mi">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">else&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">left&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">mid&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="mi">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="mi">1&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="variation-2-return-after-exiting">Variation 2: Return After Exiting&lt;/h3>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="k">def&lt;/span> &lt;span class="nf">search&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="bp">self&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">nums&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">List&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="nb">int&lt;/span>&lt;span class="p">],&lt;/span> &lt;span class="n">target&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nb">int&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">-&amp;gt;&lt;/span> &lt;span class="nb">int&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">left&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">right&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nb">len&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">nums&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="mi">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">while&lt;/span> &lt;span class="n">left&lt;/span> &lt;span class="o">&amp;lt;&lt;/span> &lt;span class="n">right&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">mid&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">left&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="n">right&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">//&lt;/span> &lt;span class="mi">2&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="n">nums&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">mid&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">&amp;gt;=&lt;/span> &lt;span class="n">target&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">right&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">mid&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">else&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">left&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">mid&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="mi">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="n">left&lt;/span> &lt;span class="k">if&lt;/span> &lt;span class="n">nums&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">left&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="n">target&lt;/span> &lt;span class="k">else&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="mi">1&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="analysis">Analysis&lt;/h2>
+&lt;h3 id="time-complexity">Time Complexity&lt;/h3>
+&lt;p>$O(logn)$: In the worst case, there are $O(logn)$ comparisons made where $n$ is the number of array elements. The entire array will be searched, where half the array is discarded after every iteration.&lt;/p>
+&lt;h3 id="space-complexity">Space Complexity&lt;/h3>
+&lt;p>$O(1)$: There are no additional data structures used.&lt;/p>
+&lt;h2 id="explanation">Explanation&lt;/h2>
+&lt;p>While the overall algorithm is straightforward, binary search&amp;rsquo;s implementation can be tricky due to different edge cases and variations. The following sections were heavily inspired by this &lt;a class="link" href="https://leetcode.com/problems/binary-search/discuss/423162/Binary-Search-101" target="_blank" rel="noopener"
+>Leetcode discussion&lt;/a>.&lt;/p>
+&lt;h3 id="leftright-boundaries">Left/Right Boundaries&lt;/h3>
+&lt;p>When searching for a target in a sorted array, these pointers are almost always initialized as:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="n">left&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">right&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nb">len&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">nums&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">-&lt;/span> &lt;span class="mi">1&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>However, both pointers must cover the &lt;strong>entire&lt;/strong> search space. If the problem was instead &lt;a class="link" href="https://leetcode.com/problems/search-insert-position/" target="_blank" rel="noopener"
+>&amp;ldquo;Find the insert position&amp;rdquo;&lt;/a>, it is possible to insert after the last element. In this case, the boundaries would be initialized as:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="n">left&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">right&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nb">len&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">nums&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="middle-pointer-calculation">Middle Pointer Calculation&lt;/h3>
+&lt;p>The standard middle pointer calculation is:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="n">mid&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">left&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="n">right&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">//&lt;/span> &lt;span class="mi">2&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>However, there are two subtleties to consider: overflow and even middle selection.&lt;/p>
+&lt;p>&lt;strong>1. Overflow&lt;/strong>&lt;/p>
+&lt;p>Languages with signed integers (ie. Java, C++) have the possibility of overflowing from arithmetic operations. To circumvent this, the following calculation can be used instead:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="n">mid&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">left&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">right&lt;/span> &lt;span class="o">-&lt;/span> &lt;span class="n">left&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">//&lt;/span> &lt;span class="mi">2&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;strong>2. Even Middle Selection&lt;/strong>&lt;/p>
+&lt;p>In arrays with an even number of elements, there are two possibitilies for the &amp;ldquo;middle&amp;rdquo; element; it can either be the element on the middle left or the middle right.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="n">mid&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">left&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">right&lt;/span> &lt;span class="o">-&lt;/span> &lt;span class="n">left&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">//&lt;/span> &lt;span class="mi">2&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">|&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">[&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mi">2&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mi">3&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mi">4&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mi">5&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mi">6&lt;/span>&lt;span class="p">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">|&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">mid&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">left&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">right&lt;/span> &lt;span class="o">-&lt;/span> &lt;span class="n">left&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">//&lt;/span> &lt;span class="mi">2&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>This selection will directly affect how the boundaries should be shrunk, as the wrong choice can lead to an infinite loop.&lt;/p>
+&lt;h3 id="while-loop-condition">While Loop Condition&lt;/h3>
+&lt;p>Two common options for the while loop condition are &lt;code>while l &amp;lt;= r&lt;/code> and &lt;code>while l &amp;lt; r&lt;/code>.&lt;/p>
+&lt;p>&lt;strong>1. &lt;code>while l &amp;lt;= r&lt;/code>&lt;/strong>&lt;/p>
+&lt;p>This should be used &lt;strong>when the result is returned from inside the loop&lt;/strong>. The termination condition is when &lt;code>l &amp;gt; r&lt;/code>, which signifies that the array does not contain the target. Note that this may not apply to all questions, as not all problems involve searching for the existence of a target.&lt;/p>
+&lt;p>&lt;strong>2. &lt;code>while l &amp;lt; r&lt;/code>&lt;/strong>&lt;/p>
+&lt;p>This should be used &lt;strong>when the result is returned from outside the loop&lt;/strong>. The termination condition is when &lt;code>l == r&lt;/code>, which signifies when the loop exits that the two boundaries point to the same value, presumably the target.&lt;/p>
+&lt;h3 id="shrinking-the-boundaries">Shrinking the Boundaries&lt;/h3>
+&lt;p>Shrinking the boundary will depend on whether the value at the current index is greater or less than the target. If the value is greater, then that means the target is guaranteed to be on its left (since the array is sorted), so the right boundary is moved. If the value is less than the target, then the target will be on its right, so the left boundary is moved.&lt;/p>
+&lt;p>There are two possibilities to consider when shrinking the boundaries - whether to include the middle pointer or not. &lt;strong>This will depend on both the middle pointer calculation and the conditional check prior to the boundary move&lt;/strong>.&lt;/p>
+&lt;p>Assuming a while condition of &lt;code>l &amp;lt; r&lt;/code>, the following would &lt;strong>not&lt;/strong> work:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="n">mid&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">left&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">right&lt;/span> &lt;span class="o">-&lt;/span> &lt;span class="n">left&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">//&lt;/span> &lt;span class="mi">2&lt;/span> &lt;span class="c1"># this line is incorrect&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">if&lt;/span> &lt;span class="n">nums&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">mid&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">&amp;gt;&lt;/span> &lt;span class="n">target&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="c1"># given this condition&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">right&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">mid&lt;/span> &lt;span class="o">-&lt;/span> &lt;span class="mi">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">else&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">left&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">mid&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>This can be fixed by changing the conditional to include the target value:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="n">mid&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">left&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">right&lt;/span> &lt;span class="o">-&lt;/span> &lt;span class="n">left&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">//&lt;/span> &lt;span class="mi">2&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">if&lt;/span> &lt;span class="n">nums&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">mid&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">&amp;gt;=&lt;/span> &lt;span class="n">target&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="c1"># correct&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">right&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">mid&lt;/span> &lt;span class="o">-&lt;/span> &lt;span class="mi">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">else&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">left&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">mid&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Or by rounding the middle pointer up during its calculation:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="n">mid&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">left&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">right&lt;/span> &lt;span class="o">-&lt;/span> &lt;span class="n">left&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">//&lt;/span> &lt;span class="mi">2&lt;/span> &lt;span class="c1"># correct&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">if&lt;/span> &lt;span class="n">nums&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">mid&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">&amp;gt;&lt;/span> &lt;span class="n">target&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">right&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">mid&lt;/span> &lt;span class="o">-&lt;/span> &lt;span class="mi">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">else&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">left&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">mid&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>A trick to easily verify if the middle pointer calculation and boundary shrinking logic are correct is to visualize how it would behave on an array with two elements. If the logic is incorrect, then the boundaries won&amp;rsquo;t move which will result in an infinite loop.&lt;/p>
+&lt;h2 id="variations">Variations&lt;/h2>
+&lt;ul>
+&lt;li>&lt;a class="link" href="https://leetcode.com/problems/search-in-rotated-sorted-array/" target="_blank" rel="noopener"
+>Search in Rotated Sorted Array&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/" target="_blank" rel="noopener"
+>Find Minimum in Sorted Array&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://leetcode.com/problems/find-minimum-in-rotated-sorted-array-ii/" target="_blank" rel="noopener"
+>Find Minimum in Sorted Array with Duplicates&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://leetcode.com/problems/search-a-2d-matrix/" target="_blank" rel="noopener"
+>Search in a 2D Matrix&lt;/a>&lt;/li>
+&lt;/ul></description></item><item><title>Hello World!</title><link>https://briannhu.github.io/AlgoBlog/p/hello-world/</link><pubDate>Sun, 22 Oct 2023 00:00:00 +0000</pubDate><guid>https://briannhu.github.io/AlgoBlog/p/hello-world/</guid><description>&lt;p>Welcome to my blog!&lt;/p>
+&lt;p>Since starting to work full-time, I&amp;rsquo;ve found myself missing the late night hours of coding and coffee. To relive those moments&amp;hellip; I&amp;rsquo;ve decided to create a blog. I&amp;rsquo;m creating this using the &lt;a class="link" href="https://gohugo.io/" target="_blank" rel="noopener"
+>Hugo&lt;/a> framework with Jimmy Cai&amp;rsquo;s &lt;a class="link" href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener"
+>Stack Theme&lt;/a>, so I can focus more on the content itself (besides, who likes frontend?).&lt;/p>
+&lt;p>Here, I&amp;rsquo;ll be documenting a list of algorithms and data structures that I find useful or interesting, with heavy inspiration from:&lt;/p>
+&lt;ul>
+&lt;li>&lt;a class="link" href="https://leetcode.com/" target="_blank" rel="noopener"
+>Leetcode&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://neetcode.io/" target="_blank" rel="noopener"
+>Neetcode&lt;/a>&lt;/li>
+&lt;li>Introduction to Algorithms, by CLRS&lt;/li>
+&lt;/ul>
+&lt;p>For easier navigation, use the handy search function that this theme provides, or filter by catagories/tags.&lt;/p>
+&lt;p>Hope you enjoy!&lt;/p>
+&lt;p>&amp;ndash; Brian&lt;/p></description></item><item><title>Archives</title><link>https://briannhu.github.io/AlgoBlog/archives/</link><pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate><guid>https://briannhu.github.io/AlgoBlog/archives/</guid><description/></item><item><title>Links</title><link>https://briannhu.github.io/AlgoBlog/links/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://briannhu.github.io/AlgoBlog/links/</guid><description>&lt;p>To use this feature, add &lt;code>links&lt;/code> section to frontmatter.&lt;/p>
+&lt;p>This page&amp;rsquo;s frontmatter:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-yaml" data-lang="yaml">&lt;span class="line">&lt;span class="cl">&lt;span class="nt">links&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="nt">title&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">GitHub&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">description&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">GitHub is the world&amp;#39;s largest software development platform.&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">website&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">https://github.com&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">image&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="nt">title&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">TypeScript&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">description&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">TypeScript is a typed superset of JavaScript that compiles to plain JavaScript.&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">website&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">https://www.typescriptlang.org&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">image&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">ts-logo-128.jpg&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;code>image&lt;/code> field accepts both local and external images.&lt;/p></description></item><item><title>Search</title><link>https://briannhu.github.io/AlgoBlog/search/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://briannhu.github.io/AlgoBlog/search/</guid><description/></item></channel></rss>
