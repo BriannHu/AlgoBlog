@@ -72,7 +72,7 @@ $O(logn)$: In the worst case, there are $O(logn)$ comparisons made where $n$ is 
 
 $O(1)$: There are no additional data structures used.
 
-## Detailed Explanation
+## Explanation
 
 While the overall algorithm is straightforward, binary search's implementation can be tricky due to different edge cases and variations. The following sections were heavily inspired by this [Leetcode discussion](https://leetcode.com/problems/binary-search/discuss/423162/Binary-Search-101).
 
